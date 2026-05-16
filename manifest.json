@@ -3,7 +3,7 @@
     "short_name": "Rutina Gym",
     "description": "Rutina de gimnasio personal - Nicolás Bursi",
     "start_url": "/rutina-gym/index.html",
-    "scope": "/rutina-gym",
+    "scope": "/rutina-gym/",
     "display": "standalone",
     "background_color": "#f4f4f4",
     "theme_color": "#1a1a2e",
