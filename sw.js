@@ -1,4 +1,5 @@
-const CACHE_NAME = 'rutina-nico-v1';
+const CACHE_NAME = 'rutina-nico-v3';
+const BASE_PATH = '/rutina-gym/';
 const ASSETS = [
     '/',
     '/index.html',
