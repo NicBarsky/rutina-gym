@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Rutina Gym">
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="/rutina-gym/manifest.json">
     <link rel="apple-touch-icon" href="icon-192.png">
     <title>Rutina Gym - Nico</title>
     <style>
@@ -949,7 +949,7 @@
 
         // ===== SERVICE WORKER =====
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js')
+            navigator.serviceWorker.register('/rutina-gym/sw.js')
                 .then(() => console.log('SW registrado'))
                 .catch(err => console.log('SW error:', err));
         }
