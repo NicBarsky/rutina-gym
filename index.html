@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1a1a2e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Rutina Gym">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <title>Rutina Gym - Nico</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            padding: 15px 10px;
+            padding-bottom: 80px;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 1.5em;
+            margin-bottom: 5px;
+            color: #1a1a2e;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 0.9em;
+            color: #555;
+            margin-bottom: 8px;
+        }
+
+        .objetivo {
+            text-align: center;
+            font-size: 0.85em;
+            color: #e63946;
+            font-weight: bold;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .datos-personales {
+            background-color: #f0f4ff;
+            border-left: 4px solid #457b9d;
+            padding: 12px 15px;
+            margin-bottom: 25px;
+            border-radius: 4px;
+            font-size: 0.82em;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 16px;
+        }
+
+        .datos-personales span {
+            white-space: nowrap;
+        }
+
+        /* NAV TABS */
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav-tab {
+            padding: 8px 14px;
+            border: none;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+            cursor: pointer;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            background-color: #e9ecef;
+            color: #555;
+            transition: all 0.2s;
+        }
+
+        .nav-tab.active {
+            color: #fff;
+        }
+
+        .nav-tab.tab-a.active { background-color: #2a9d8f; }
+        .nav-tab.tab-b.active { background-color: #e76f51; }
+        .nav-tab.tab-c.active { background-color: #457b9d; }
+        .nav-tab.tab-d.active { background-color: #6a4c93; }
+        .nav-tab.tab-hist.active { background-color: #1a1a2e; }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* MINI RESUMEN */
+        .mini-resumen {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            background-color: #e8f5e9;
+            border: 1px solid #a5d6a7;
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        .mini-resumen .stat {
+            text-align: center;
+        }
+
+        .mini-resumen .stat-number {
+            font-size: 1.4em;
+            color: #2a9d8f;
+            display: block;
+        }
+
+        .mini-resumen .stat-label {
+            font-size: 0.8em;
+            color: #555;
+            font-weight: normal;
+        }
+
+        /* ENCABEZADOS DE RUTINA */
+        .rutina-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+        }
+
+        .rutina-header.rutina-a { background-color: #2a9d8f; }
+        .rutina-header.rutina-b { background-color: #e76f51; }
+        .rutina-header.rutina-c { background-color: #457b9d; }
+        .rutina-header.rutina-d { background-color: #6a4c93; }
+
+        .rutina-header-left {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .rutina-header-left h2 {
+            font-size: 0.95em;
+            line-height: 1.3;
+            margin: 0;
+            padding: 0;
+        }
+
+        .badges {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .cardio-badge {
+            display: inline-block;
+            background-color: #ffbe0b;
+            color: #333;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.7em;
+            font-weight: bold;
+        }
+
+        .no-cardio-badge {
+            display: inline-block;
+            background-color: #adb5bd;
+            color: #333;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.7em;
+            font-weight: bold;
+        }
+
+        .btn-registrar {
+            background-color: rgba(255,255,255,0.2);
+            border: 1.5px solid #fff;
+            color: #fff;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 0.72em;
+            font-weight: bold;
+            cursor: pointer;
+            white-space: nowrap;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            transition: background-color 0.2s;
+        }
+
+        .btn-registrar:active {
+            background-color: rgba(255,255,255,0.4);
+            transform: scale(0.95);
+        }
+
+        /* TABLAS */
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            border: 1px solid #eee;
+        }
+
+        table {
+            width: 100%;
+            min-width: 380px;
+            border-collapse: collapse;
+        }
+
+        thead th {
+            background-color: #e9ecef;
+            padding: 10px 8px;
+            text-align: left;
+            font-size: 0.75em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid #dee2e6;
+            position: sticky;
+            top: 0;
+            white-space: nowrap;
+        }
+
+        tbody td {
+            padding: 9px 8px;
+            border-bottom: 1px solid #eee;
+            font-size: 0.82em;
+        }
+
+        tbody tr:active {
+            background-color: #f0f4ff;
+        }
+
+        .section-label {
+            background-color: #f0f4ff;
+            font-weight: bold;
+            font-size: 0.78em;
+            color: #457b9d;
+        }
+
+        .section-label td {
+            padding: 7px 8px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .peso-col {
+            width: 80px;
+            min-width: 80px;
+        }
+
+        .peso-input {
+            width: 100%;
+            padding: 8px 6px;
+            border: 1px dashed #ccc;
+            border-radius: 6px;
+            background-color: #fafafa;
+            font-size: 0.9em;
+            font-family: inherit;
+            text-align: center;
+            -webkit-appearance: none;
+            appearance: none;
+            touch-action: manipulation;
+        }
+
+        .peso-input:focus {
+            outline: none;
+            border-color: #457b9d;
+            background-color: #fff;
+            box-shadow: 0 0 6px rgba(69, 123, 157, 0.4);
+        }
+
+        /* HISTORIAL */
+        .historial h3 {
+            font-size: 1.1em;
+            color: #1a1a2e;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .historial-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .historial-controls select {
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 0.9em;
+            font-family: inherit;
+            background-color: #fff;
+            touch-action: manipulation;
+        }
+
+        .historial-table {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border-radius: 6px;
+            border: 1px solid #eee;
+        }
+
+        .historial-table table {
+            min-width: 300px;
+        }
+
+        .historial-table tbody td {
+            font-size: 0.8em;
+        }
+
+        .rutina-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.75em;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .rutina-tag.tag-a { background-color: #2a9d8f; }
+        .rutina-tag.tag-b { background-color: #e76f51; }
+        .rutina-tag.tag-c { background-color: #457b9d; }
+        .rutina-tag.tag-d { background-color: #6a4c93; }
+
+        .btn-borrar-entrada {
+            background: none;
+            border: none;
+            color: #e63946;
+            font-size: 1.1em;
+            cursor: pointer;
+            padding: 4px 8px;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btn-borrar-entrada:active {
+            transform: scale(0.9);
+        }
+
+        .historial-vacio {
+            text-align: center;
+            color: #999;
+            font-size: 0.85em;
+            padding: 20px;
+        }
+
+        /* NOTAS */
+        .notas {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffbe0b;
+            padding: 12px 15px;
+            margin-top: 20px;
+            border-radius: 4px;
+            font-size: 0.82em;
+            line-height: 1.5;
+        }
+
+        .notas h3 {
+            margin-bottom: 8px;
+            color: #856404;
+            font-size: 1em;
+        }
+
+        .notas ul {
+            padding-left: 18px;
+        }
+
+        .notas li {
+            margin-bottom: 6px;
+        }
+
+        /* BOTONES */
+        .botones {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn-guardar {
+            width: 100%;
+            padding: 14px 20px;
+            background-color: #2a9d8f;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btn-guardar:active {
+            background-color: #21867a;
+            transform: scale(0.98);
+        }
+
+        .btn-limpiar {
+            width: 100%;
+            padding: 12px 20px;
+            background-color: #e63946;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9em;
+            font-weight: bold;
+            cursor: pointer;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btn-limpiar:active {
+            background-color: #c5303b;
+            transform: scale(0.98);
+        }
+
+        .msg-guardado {
+            text-align: center;
+            margin-top: 10px;
+            color: #2a9d8f;
+            font-weight: bold;
+            font-size: 0.9em;
+            display: none;
+        }
+
+        /* TOAST */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 0.85em;
+            font-weight: bold;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        @media (min-width: 768px) {
+            body {
+                padding: 40px 20px;
+            }
+            .container {
+                padding: 40px;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            .rutina-header-left h2 {
+                font-size: 1.1em;
+            }
+            thead th {
+                font-size: 0.85em;
+            }
+            tbody td {
+                font-size: 0.9em;
+            }
+            .peso-col {
+                width: 120px;
+            }
+            .botones {
+                flex-direction: row;
+                justify-content: center;
+            }
+            .btn-guardar, .btn-limpiar {
+                width: auto;
+                padding: 12px 30px;
+            }
+        }
+
+        @media print {
+            body {
+                background-color: #fff;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
+            .botones, .msg-guardado, .btn-registrar, .toast, .nav-tabs {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏋️ Rutina Gym</h1>
+        <p class="subtitle">Nicolás Bursi</p>
+        <p class="objetivo">Objetivo: Descenso de masa grasa (2.5 kg) — Definición piernas, cadera y abdomen</p>
+
+        <div class="datos-personales">
+            <span><strong>Edad:</strong> 34</span>
+            <span><strong>Peso:</strong> 84 kg</span>
+            <span><strong>Estatura:</strong> 1.78 m</span>
+            <span><strong>Extra:</strong> Fútbol 1h/sem</span>
+        </div>
+
+        <!-- MINI RESUMEN -->
+        <div class="mini-resumen">
+            <div class="stat">
+                <span class="stat-number" id="stat-semana">0</span>
+                <span class="stat-label">esta semana</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number" id="stat-mes">0</span>
+                <span class="stat-label">este mes</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number" id="stat-total">0</span>
+                <span class="stat-label">total</span>
+            </div>
+        </div>
+
+        <!-- NAVIGATION TABS -->
+        <div class="nav-tabs">
+            <button class="nav-tab tab-a active" onclick="showTab('a')">A</button>
+            <button class="nav-tab tab-b" onclick="showTab('b')">B</button>
+            <button class="nav-tab tab-c" onclick="showTab('c')">C</button>
+            <button class="nav-tab tab-d" onclick="showTab('d')">D</button>
+            <button class="nav-tab tab-hist" onclick="showTab('hist')">📅</button>
+        </div>
+
+        <!-- RUTINA A -->
+        <div class="tab-content active" id="tab-a">
+            <div class="rutina-header rutina-a">
+                <div class="rutina-header-left">
+                    <h2>RUTINA A: TREN INFERIOR + CORE</h2>
+                    <div class="badges"><span class="no-cardio-badge">SIN CARDIO</span></div>
+                </div>
+                <button class="btn-registrar" onclick="registrarEntrada('A')">📅 Registrar</button>
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr><th>Ejercicio</th><th>Reps</th><th>Series</th><th>Peso</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr class="section-label"><td colspan="4">TREN INFERIOR</td></tr>
+                        <tr><td>Prensa aductor</td><td>12</td><td>4</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
+                        <tr><td>Abductor en máquina</td><td>15</td><td>4</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
+                        <tr><td>Extensión de rodilla</td><td>12</td><td>4</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
+                        <tr><td>Flexión de rodilla</td><td>12</td><td>4</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
+                        <tr><td>Sentadilla sumo con mancuerna</td><td>15</td><td>3</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
+                        <tr class="section-label"><td colspan="4">CORE / ESPINALES — 3 rounds (50" / 10")</td></tr>
+                        <tr><td>Espinales alternados</td><td>20</td><td>3</td><td class="peso-col"><input type="text" class="peso-input" placeholder="—"></td></tr>
+                        <tr><td>Bicho muerto c/ mancuernas</td><td>20</td><td>3</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
+                        <tr><td>Plancha baja (cadera lado a lado)</td><td>40 seg</td><td>3</td><td class="peso-col"><input type="text" class="peso-input" placeholder="—"></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="botones">
+                <button class="btn-guardar" onclick="guardarPesos()">💾 Guardar pesos</button>
+            </div>
+        </div>
+
+        <!-- RUTINA B -->
+        <div class="tab-content" id="tab-b">
+            <div class="rutina-header rutina-b">
+                <div class="rutina-header-left">
+                    <h2>RUTINA B: PECHO + ESPALDA</h2>
+                    <div class="badges"><span class="cardio-badge">CARDIO 15 MIN</span></div>
+                </div>
+                <button class="btn-registrar" onclick="registrarEntrada('B')">📅 Registrar</button>
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr><th>Ejercicio</th><th>Reps</th><th>Series</th><th>Peso</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr class="section-label"><td colspan="4">CARDIO</td></tr>
+                        <tr><td>Elíptico o cinta c/ inclinación</td><td>15 min</td><td>1</td><td class="peso-col"><input type="text" class="peso-input" placeholder="—"></td></tr>
+                        <tr class="section-label"><td colspan="4">PECHO</td></tr>
+                        <tr><td>Empuje pecho banco plano c/ barra</td><td>10</td><td>4</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
+                        <tr><td>Apertura pecho inclinado c/ manc.</td><td>10</td><td>4</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
+                        <tr><td>Apertura de pecho en máquina</td><td>12</td><td>3</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
+                        <tr class="section-label"><td colspan="4">ESPALDA</td></tr>
+                        <tr><td>Dorsalera con agarre prono</td><td>10</td><td>4</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
+                        <tr><td>Remo en máquina</td><td>12</td><td>3</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="botones">
+                <button class="btn-guardar" onclick="guardarPesos()">💾 Guardar pesos</button>
+            </div>
+        </div>
+
+        <!-- RUTINA C -->
+        <div class="tab-content" id="tab-c">
+            <div class="rutina-header rutina-c">
+                <div class="rutina-header-left">
+                    <h2>RUTINA C: PIERNAS POST. + HOMBROS</h2>
+                    <div class="badges"><span class="cardio-badge">CARDIO 15 MIN</span></div>
+                </div>
+                <button class="btn-registrar" onclick="registrarEntrada('C')">📅 Registrar</button>
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr><th>Ejercicio</th><th>Reps</th><th>Series</th><th>Peso</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr class="section-label"><td colspan="4">CARDIO</td></tr>
+                        <tr><td>Cinta — Intervalos (1' x 1')</td><td>15 min</td><td>1</td><td class="peso-col"><input type="text" class="peso-input" placeholder="—"></td></tr>
+                        <tr class="section-label"><td colspan="4">PIERNAS POSTERIOR</td></tr>
+                        <tr><td>Hip thrust con barra</td><td>10</td><td>4</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
+                        <tr><td>Estocadas en Smith</td><td>16</td><td>3</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
+                        <tr><td>Flexión de rodilla</td><td>12</td><td>4</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
+                        <tr class="section-label"><td colspan="4">HOMBROS</td></tr>
+                        <tr><td>Push press c/ barra en rack</td><td>10</td><td>4</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
+                        <tr><td>Vuelos laterales c/ mancuernas</td><td>12</td><td>4</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
+                        <tr><td>Vuelos posteriores en máquina</td><td>12</td><td>3</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="botones">
+                <button class="btn-guardar" onclick="guardarPesos()">💾 Guardar pesos</button>
+            </div>
+        </div>
+
+        <!-- RUTINA D -->
+        <div class="tab-content" id="tab-d">
+            <div class="rutina-header rutina-d">
+                <div class="rutina-header-left">
+                    <h2>RUTINA D: CORE + BÍCEPS + TRÍCEPS</h2>
+                    <div class="badges"><span class="cardio-badge">CARDIO 15 MIN</span></div>
+                </div>
+                <button class="btn-registrar" onclick="registrarEntrada('D')">📅 Registrar</button>
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr><th>Ejercicio</th><th>Reps</th><th>Series</th><th>Peso</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr class="section-label"><td colspan="4">CARDIO</td></tr>
+                        <tr><td>Elíptico o cinta c/ inclinación</td><td>15 min</td><td>1</td><td class="peso-col"><input type="text" class="peso-input" placeholder="—"></td></tr>
+                        <tr class="section-label"><td colspan="4">CORE — 3 rounds (50" / 10")</td></tr>
+                        <tr><td>Abd. twist con disco</td><td>20</td><td>3</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
+                        <tr><td>Abd. sit up over head c/ disco</td><td>15</td><td>3</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
+                        <tr><td>Plancha alta (rodilla al codo)</td><td>40 seg</td><td>3</td><td class="peso-col"><input type="text" class="peso-input" placeholder="—"></td></tr>
+                        <tr class="section-label"><td colspan="4">BÍCEPS</td></tr>
+                        <tr><td>Curl bíceps c/ barra de pie</td><td>10</td><td>4</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
+                        <tr><td>Curl bíceps martillo cruzado</td><td>16</td><td>3</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
+                        <tr><td>Curl bíceps c/ barra en polea</td><td>15</td><td>3</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
+                        <tr class="section-label"><td colspan="4">TRÍCEPS</td></tr>
+                        <tr><td>Ext. tríceps trasnuca c/ manc.</td><td>12</td><td>4</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
+                        <tr><td>Press francés con barra</td><td>12</td><td>3</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
+                        <tr><td>Extensión de tríceps en polea</td><td>15</td><td>3</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="botones">
+                <button class="btn-guardar" onclick="guardarPesos()">💾 Guardar pesos</button>
+            </div>
+        </div>
+
+        <!-- HISTORIAL -->
+        <div class="tab-content" id="tab-hist">
+            <div class="historial">
+                <h3>📅 Historial de Entrenamientos</h3>
+                <div class="historial-controls">
+                    <label for="mes-selector"><strong>Ver mes:</strong></label>
+                    <select id="mes-selector" onchange="renderHistorial()"></select>
+                </div>
+                <div class="historial-table">
+                    <table>
+                        <thead>
+                            <tr><th>Fecha</th><th>Rutina</th><th></th></tr>
+                        </thead>
+                        <tbody id="historial-body"></tbody>
+                    </table>
+                </div>
+                <p class="historial-vacio" id="historial-vacio" style="display:none;">No hay entrenamientos registrados en este mes.</p>
+            </div>
+
+            <!-- NOTAS -->
+            <div class="notas">
+                <h3>📝 Notas</h3>
+                <ul>
+                    <li><strong>Rutina A:</strong> Core/Espinales en circuito (3 rounds, 50"/10").</li>
+                    <li><strong>Rutina B:</strong> Cardio al inicio — elíptico o cinta con inclinación.</li>
+                    <li><strong>Rutina C:</strong> Cardio al inicio — HIIT en cinta (1'/1').</li>
+                    <li><strong>Rutina D:</strong> Cardio al inicio + Core en circuito + Brazos.</li>
+                    <li><strong>Peso muerto:</strong> Excluido.</li>
+                    <li><strong>Duración:</strong> 60-75 min por sesión.</li>
+                </ul>
+            </div>
+
+            <div class="botones">
+                <button class="btn-limpiar" onclick="limpiarPesos()">🗑️ Limpiar todos los pesos</button>
+            </div>
+        </div>
+
+        <p class="msg-guardado" id="msg-guardado">✅ Pesos guardados</p>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // ===== TABS =====
+        function showTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
+            document.getElementById(`tab-${tab}`).classList.add('active');
+            document.querySelector(`.tab-${tab}`).classList.add('active');
+
+            if (tab === 'hist') {
+                renderHistorial();
+            }
+        }
+
+        // ===== CONSTANTES =====
+        const RUTINAS = {
+            'A': 'Tren inferior + Core',
+            'B': 'Pecho + Espalda',
+            'C': 'Piernas post. + Hombros',
+            'D': 'Core + Bíceps + Tríceps'
+        };
+
+        const MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
+                       'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+
+        // ===== HISTORIAL =====
+        function getHistorial() {
+            const data = localStorage.getItem('rutina_nico_historial');
+            return data ? JSON.parse(data) : [];
+        }
+
+        function saveHistorial(historial) {
+            localStorage.setItem('rutina_nico_historial', JSON.stringify(historial));
+        }
+
+        function registrarEntrada(rutina) {
+            const ahora = new Date();
+            const entrada = {
+                id: Date.now(),
+                fecha: ahora.toISOString(),
+                rutina: rutina
+            };
+            const historial = getHistorial();
+            historial.unshift(entrada);
+            saveHistorial(historial);
+            actualizarResumen();
+            populateMesSelector();
+            showToast(`✅ Rutina ${rutina} registrada`);
+        }
+
+        function borrarEntrada(id) {
+            if (confirm('¿Borrar esta entrada?')) {
+                let historial = getHistorial();
+                historial = historial.filter(e => e.id !== id);
+                saveHistorial(historial);
+                actualizarResumen();
+                renderHistorial();
+                populateMesSelector();
+                showToast('🗑️ Entrada eliminada');
+            }
+        }
+
+        function renderHistorial() {
+            const selector = document.getElementById('mes-selector');
+            const selectedValue = selector.value;
+            const historial = getHistorial();
+            const tbody = document.getElementById('historial-body');
+            const vacio = document.getElementById('historial-vacio');
+
+            let filtrado = historial;
+            if (selectedValue) {
+                const [year, month] = selectedValue.split('-').map(Number);
+                filtrado = historial.filter(e => {
+                    const d = new Date(e.fecha);
+                    return d.getFullYear() === year && d.getMonth() === month;
+                });
+            }
+
+            tbody.innerHTML = '';
+
+            if (filtrado.length === 0) {
+                vacio.style.display = 'block';
+            } else {
+                vacio.style.display = 'none';
+                filtrado.forEach(entry => {
+                    const d = new Date(entry.fecha);
+                    const fechaStr = d.toLocaleDateString('es-AR', {
+                        weekday: 'short', day: '2-digit', month: '2-digit', year: 'numeric'
+                    });
+                    const tagClass = `tag-${entry.rutina.toLowerCase()}`;
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${fechaStr}</td>
+                        <td><span class="rutina-tag ${tagClass}">Rutina ${entry.rutina}</span></td>
+                        <td><button class="btn-borrar-entrada" onclick="borrarEntrada(${entry.id})">✕</button></td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+        }
+
+        function populateMesSelector() {
+            const selector = document.getElementById('mes-selector');
+            const historial = getHistorial();
+            const ahora = new Date();
+            const mesesDisponibles = new Set();
+
+            mesesDisponibles.add(`${ahora.getFullYear()}-${ahora.getMonth()}`);
+            const mesAnterior = new Date(ahora.getFullYear(), ahora.getMonth() - 1, 1);
+            mesesDisponibles.add(`${mesAnterior.getFullYear()}-${mesAnterior.getMonth()}`);
+
+            historial.forEach(e => {
+                const d = new Date(e.fecha);
+                mesesDisponibles.add(`${d.getFullYear()}-${d.getMonth()}`);
+            });
+
+            const mesesOrdenados = Array.from(mesesDisponibles).sort((a, b) => {
+                const [ay, am] = a.split('-').map(Number);
+                const [by, bm] = b.split('-').map(Number);
+                return (by * 12 + bm) - (ay * 12 + am);
+            });
+
+            const currentValue = selector.value;
+            selector.innerHTML = '';
+
+            mesesOrdenados.forEach(mes => {
+                const [year, month] = mes.split('-').map(Number);
+                const option = document.createElement('option');
+                option.value = mes;
+                option.textContent = `${MESES[month]} ${year}`;
+                selector.appendChild(option);
+            });
+
+            if (currentValue && Array.from(selector.options).some(o => o.value === currentValue)) {
+                selector.value = currentValue;
+            } else {
+                selector.value = `${ahora.getFullYear()}-${ahora.getMonth()}`;
+            }
+        }
+
+        // ===== RESUMEN =====
+        function actualizarResumen() {
+            const historial = getHistorial();
+            const ahora = new Date();
+
+            const inicioSemana = new Date(ahora);
+            const day = ahora.getDay();
+            const diff = day === 0 ? 6 : day - 1;
+            inicioSemana.setDate(ahora.getDate() - diff);
+            inicioSemana.setHours(0, 0, 0, 0);
+
+            const estaSemana = historial.filter(e => new Date(e.fecha) >= inicioSemana).length;
+            const esteMes = historial.filter(e => {
+                const d = new Date(e.fecha);
+                return d.getMonth() === ahora.getMonth() && d.getFullYear() === ahora.getFullYear();
+            }).length;
+            const total = historial.length;
+
+            document.getElementById('stat-semana').textContent = estaSemana;
+            document.getElementById('stat-mes').textContent = esteMes;
+            document.getElementById('stat-total').textContent = total;
+        }
+
+        // ===== PESOS =====
+        function guardarPesos() {
+            const inputs = document.querySelectorAll('.peso-input');
+            const datos = [];
+            inputs.forEach((input, index) => {
+                datos.push({ index: index, value: input.value });
+            });
+            localStorage.setItem('rutina_nico_pesos_pwa', JSON.stringify(datos));
+            const msg = document.getElementById('msg-guardado');
+            msg.style.display = 'block';
+            setTimeout(() => { msg.style.display = 'none'; }, 2500);
+        }
+
+        function cargarPesos() {
+            const guardados = localStorage.getItem('rutina_nico_pesos_pwa');
+            if (guardados) {
+                const datos = JSON.parse(guardados);
+                const inputs = document.querySelectorAll('.peso-input');
+                datos.forEach(item => {
+                    if (inputs[item.index]) {
+                        inputs[item.index].value = item.value;
+                    }
+                });
+            }
+        }
+
+        function limpiarPesos() {
+            if (confirm('¿Borrar todos los pesos?')) {
+                const inputs = document.querySelectorAll('.peso-input');
+                inputs.forEach(input => { input.value = ''; });
+                localStorage.removeItem('rutina_nico_pesos_pwa');
+                showToast('🗑️ Pesos eliminados');
+            }
+        }
+
+        // ===== TOAST =====
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => { toast.classList.remove('show'); }, 2500);
+        }
+
+        // ===== SERVICE WORKER =====
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(() => console.log('SW registrado'))
+                .catch(err => console.log('SW error:', err));
+        }
+
+        // ===== INIT =====
+        window.onload = function() {
+            cargarPesos();
+            actualizarResumen();
+            populateMesSelector();
+        };
+    </script>
+</body>
+</html>
