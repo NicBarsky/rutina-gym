@@ -74,6 +74,36 @@
             white-space: nowrap;
         }
 
+        .peso-actual-input {
+            width: 55px;
+            padding: 3px 5px;
+            border: 1px dashed #457b9d;
+            border-radius: 4px;
+            background-color: #fff;
+            font-size: 0.95em;
+            font-family: inherit;
+            font-weight: bold;
+            text-align: center;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .peso-actual-input:focus {
+            outline: none;
+            border-color: #1a1a2e;
+            box-shadow: 0 0 4px rgba(69, 123, 157, 0.4);
+        }
+
+        .calorias-badge {
+            display: inline-block;
+            background-color: #d00000;
+            color: #fff;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.7em;
+            font-weight: bold;
+        }
+
         /* NAV TABS */
         .nav-tabs {
             display: flex;
@@ -105,6 +135,9 @@
         .nav-tab.tab-b.active { background-color: #e76f51; }
         .nav-tab.tab-c.active { background-color: #457b9d; }
         .nav-tab.tab-d.active { background-color: #6a4c93; }
+        .nav-tab.tab-e.active { background-color: #d62828; }
+        .nav-tab.tab-f.active { background-color: #386641; }
+        .nav-tab.tab-g.active { background-color: #ee9b00; }
         .nav-tab.tab-hist.active { background-color: #1a1a2e; }
 
         .tab-content {
@@ -161,6 +194,9 @@
         .rutina-header.rutina-b { background-color: #e76f51; }
         .rutina-header.rutina-c { background-color: #457b9d; }
         .rutina-header.rutina-d { background-color: #6a4c93; }
+        .rutina-header.rutina-e { background-color: #d62828; }
+        .rutina-header.rutina-f { background-color: #386641; }
+        .rutina-header.rutina-g { background-color: #ee9b00; }
 
         .rutina-header-left {
             display: flex;
@@ -195,6 +231,16 @@
             display: inline-block;
             background-color: #adb5bd;
             color: #333;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.7em;
+            font-weight: bold;
+        }
+
+        .hiit-badge {
+            display: inline-block;
+            background-color: #d62828;
+            color: #fff;
             padding: 2px 8px;
             border-radius: 12px;
             font-size: 0.7em;
@@ -354,6 +400,9 @@
         .rutina-tag.tag-b { background-color: #e76f51; }
         .rutina-tag.tag-c { background-color: #457b9d; }
         .rutina-tag.tag-d { background-color: #6a4c93; }
+        .rutina-tag.tag-e { background-color: #d62828; }
+        .rutina-tag.tag-f { background-color: #386641; }
+        .rutina-tag.tag-g { background-color: #ee9b00; }
 
         .btn-borrar-entrada {
             background: none;
@@ -534,7 +583,7 @@
 
         <div class="datos-personales">
             <span><strong>Edad:</strong> 34</span>
-            <span><strong>Peso:</strong> 84 kg</span>
+            <span class="peso-actual-wrap"><strong>Peso:</strong> <input type="number" id="peso-actual" class="peso-actual-input" step="0.1" min="30" max="250"> kg</span>
             <span><strong>Estatura:</strong> 1.78 m</span>
             <span><strong>Extra:</strong> Fútbol 1h/sem</span>
         </div>
@@ -561,6 +610,9 @@
             <button class="nav-tab tab-b" onclick="showTab('b')">B</button>
             <button class="nav-tab tab-c" onclick="showTab('c')">C</button>
             <button class="nav-tab tab-d" onclick="showTab('d')">D</button>
+            <button class="nav-tab tab-e" onclick="showTab('e')">E</button>
+            <button class="nav-tab tab-f" onclick="showTab('f')">F</button>
+            <button class="nav-tab tab-g" onclick="showTab('g')">G</button>
             <button class="nav-tab tab-hist" onclick="showTab('hist')">📅</button>
         </div>
 
@@ -569,7 +621,7 @@
             <div class="rutina-header rutina-a">
                 <div class="rutina-header-left">
                     <h2>RUTINA A: TREN INFERIOR + CORE</h2>
-                    <div class="badges"><span class="no-cardio-badge">SIN CARDIO</span></div>
+                    <div class="badges"><span class="no-cardio-badge">SIN CARDIO</span><span class="calorias-badge" id="cal-a">🔥 — kcal</span></div>
                 </div>
                 <button class="btn-registrar" onclick="registrarEntrada('A')">📅 Registrar</button>
             </div>
@@ -602,7 +654,7 @@
             <div class="rutina-header rutina-b">
                 <div class="rutina-header-left">
                     <h2>RUTINA B: PECHO + ESPALDA</h2>
-                    <div class="badges"><span class="cardio-badge">CARDIO 15 MIN</span></div>
+                    <div class="badges"><span class="cardio-badge">CARDIO 15 MIN</span><span class="calorias-badge" id="cal-b">🔥 — kcal</span></div>
                 </div>
                 <button class="btn-registrar" onclick="registrarEntrada('B')">📅 Registrar</button>
             </div>
@@ -613,7 +665,7 @@
                     </thead>
                     <tbody>
                         <tr class="section-label"><td colspan="4">CARDIO</td></tr>
-                        <tr><td>Elíptico o cinta c/ inclinación</td><td>15 min</td><td>1</td><td class="peso-col"><input type="text" class="peso-input" placeholder="—"></td></tr>
+                        <tr><td>Cinta — Intervalos (1' x 1')</td><td>15 min</td><td>1</td><td class="peso-col"><input type="text" class="peso-input" placeholder="—"></td></tr>
                         <tr class="section-label"><td colspan="4">PECHO</td></tr>
                         <tr><td>Empuje pecho banco plano c/ barra</td><td>10</td><td>4</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
                         <tr><td>Apertura pecho inclinado c/ manc.</td><td>10</td><td>4</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
@@ -634,7 +686,7 @@
             <div class="rutina-header rutina-c">
                 <div class="rutina-header-left">
                     <h2>RUTINA C: PIERNAS POST. + HOMBROS</h2>
-                    <div class="badges"><span class="cardio-badge">CARDIO 15 MIN</span></div>
+                    <div class="badges"><span class="cardio-badge">CARDIO 15 MIN</span><span class="calorias-badge" id="cal-c">🔥 — kcal</span></div>
                 </div>
                 <button class="btn-registrar" onclick="registrarEntrada('C')">📅 Registrar</button>
             </div>
@@ -645,7 +697,7 @@
                     </thead>
                     <tbody>
                         <tr class="section-label"><td colspan="4">CARDIO</td></tr>
-                        <tr><td>Cinta — Intervalos (1' x 1')</td><td>15 min</td><td>1</td><td class="peso-col"><input type="text" class="peso-input" placeholder="—"></td></tr>
+                        <tr><td>Elíptico o cinta c/ inclinación</td><td>15 min</td><td>1</td><td class="peso-col"><input type="text" class="peso-input" placeholder="—"></td></tr>
                         <tr class="section-label"><td colspan="4">PIERNAS POSTERIOR</td></tr>
                         <tr><td>Hip thrust con barra</td><td>10</td><td>4</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
                         <tr><td>Estocadas en Smith</td><td>16</td><td>3</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
@@ -667,7 +719,7 @@
             <div class="rutina-header rutina-d">
                 <div class="rutina-header-left">
                     <h2>RUTINA D: CORE + BÍCEPS + TRÍCEPS</h2>
-                    <div class="badges"><span class="cardio-badge">CARDIO 15 MIN</span></div>
+                    <div class="badges"><span class="no-cardio-badge">SIN CARDIO</span><span class="calorias-badge" id="cal-d">🔥 — kcal</span></div>
                 </div>
                 <button class="btn-registrar" onclick="registrarEntrada('D')">📅 Registrar</button>
             </div>
@@ -677,8 +729,6 @@
                         <tr><th>Ejercicio</th><th>Reps</th><th>Series</th><th>Peso</th></tr>
                     </thead>
                     <tbody>
-                        <tr class="section-label"><td colspan="4">CARDIO</td></tr>
-                        <tr><td>Elíptico o cinta c/ inclinación</td><td>15 min</td><td>1</td><td class="peso-col"><input type="text" class="peso-input" placeholder="—"></td></tr>
                         <tr class="section-label"><td colspan="4">CORE — 3 rounds (50" / 10")</td></tr>
                         <tr><td>Abd. twist con disco</td><td>20</td><td>3</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
                         <tr><td>Abd. sit up over head c/ disco</td><td>15</td><td>3</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
@@ -691,6 +741,121 @@
                         <tr><td>Ext. tríceps trasnuca c/ manc.</td><td>12</td><td>4</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
                         <tr><td>Press francés con barra</td><td>12</td><td>3</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
                         <tr><td>Extensión de tríceps en polea</td><td>15</td><td>3</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="botones">
+                <button class="btn-guardar" onclick="guardarPesos()">💾 Guardar pesos</button>
+            </div>
+        </div>
+
+        <!-- RUTINA E -->
+        <div class="tab-content" id="tab-e">
+            <div class="rutina-header rutina-e">
+                <div class="rutina-header-left">
+                    <h2>RUTINA E: HIIT (CIRCUITO METABÓLICO)</h2>
+                    <div class="badges"><span class="hiit-badge">HIIT ~60 MIN</span><span class="calorias-badge" id="cal-e">🔥 — kcal</span></div>
+                </div>
+                <button class="btn-registrar" onclick="registrarEntrada('E')">📅 Registrar</button>
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr><th>Ejercicio</th><th>Reps</th><th>Series</th><th>Peso</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr class="section-label"><td colspan="4">CALENTAMIENTO — 5 min</td></tr>
+                        <tr><td>Trote suave + movilidad articular</td><td>5 min</td><td>1</td><td class="peso-col"><input type="text" class="peso-input" placeholder="—"></td></tr>
+                        <tr class="section-label"><td colspan="4">CIRCUITO 1 — 4 rounds (40″ / 20″)</td></tr>
+                        <tr><td>Burpees</td><td>40 seg</td><td>4</td><td class="peso-col"><input type="text" class="peso-input" placeholder="—"></td></tr>
+                        <tr><td>Sentadilla con salto</td><td>40 seg</td><td>4</td><td class="peso-col"><input type="text" class="peso-input" placeholder="—"></td></tr>
+                        <tr><td>Escalador (mountain climbers)</td><td>40 seg</td><td>4</td><td class="peso-col"><input type="text" class="peso-input" placeholder="—"></td></tr>
+                        <tr><td>Zancada alterna con salto</td><td>40 seg</td><td>4</td><td class="peso-col"><input type="text" class="peso-input" placeholder="—"></td></tr>
+                        <tr class="section-label"><td colspan="4">DESCANSO — 2 min</td></tr>
+                        <tr class="section-label"><td colspan="4">CIRCUITO 2 — 4 rounds (40″ / 20″)</td></tr>
+                        <tr><td>Flexiones de brazos</td><td>40 seg</td><td>4</td><td class="peso-col"><input type="text" class="peso-input" placeholder="—"></td></tr>
+                        <tr><td>Plancha con toque de hombro</td><td>40 seg</td><td>4</td><td class="peso-col"><input type="text" class="peso-input" placeholder="—"></td></tr>
+                        <tr><td>Remo renegado c/ mancuernas</td><td>40 seg</td><td>4</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
+                        <tr><td>Abdominales en V (V-ups)</td><td>40 seg</td><td>4</td><td class="peso-col"><input type="text" class="peso-input" placeholder="—"></td></tr>
+                        <tr class="section-label"><td colspan="4">DESCANSO — 2 min</td></tr>
+                        <tr class="section-label"><td colspan="4">CIRCUITO 3 — 4 rounds (40″ / 20″)</td></tr>
+                        <tr><td>Jumping jacks</td><td>40 seg</td><td>4</td><td class="peso-col"><input type="text" class="peso-input" placeholder="—"></td></tr>
+                        <tr><td>Escalador cruzado</td><td>40 seg</td><td>4</td><td class="peso-col"><input type="text" class="peso-input" placeholder="—"></td></tr>
+                        <tr><td>Sentadilla con salto lateral</td><td>40 seg</td><td>4</td><td class="peso-col"><input type="text" class="peso-input" placeholder="—"></td></tr>
+                        <tr><td>Soga o sprint en cinta</td><td>40 seg</td><td>4</td><td class="peso-col"><input type="text" class="peso-input" placeholder="—"></td></tr>
+                        <tr class="section-label"><td colspan="4">ENFRIAMIENTO — 5 min</td></tr>
+                        <tr><td>Estiramiento general</td><td>5 min</td><td>1</td><td class="peso-col"><input type="text" class="peso-input" placeholder="—"></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="botones">
+                <button class="btn-guardar" onclick="guardarPesos()">💾 Guardar pesos</button>
+            </div>
+        </div>
+
+        <!-- RUTINA F -->
+        <div class="tab-content" id="tab-f">
+            <div class="rutina-header rutina-f">
+                <div class="rutina-header-left">
+                    <h2>RUTINA F: FULL BODY (CON DOMINADAS)</h2>
+                    <div class="badges"><span class="no-cardio-badge">SIN CARDIO</span><span class="calorias-badge" id="cal-f">🔥 — kcal</span></div>
+                </div>
+                <button class="btn-registrar" onclick="registrarEntrada('F')">📅 Registrar</button>
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr><th>Ejercicio</th><th>Reps</th><th>Series</th><th>Peso</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr class="section-label"><td colspan="4">TIRE — ESPALDA</td></tr>
+                        <tr><td>Dominadas pronas (agarre ancho)</td><td>8</td><td>4</td><td class="peso-col"><input type="text" class="peso-input" placeholder="—/kg"></td></tr>
+                        <tr><td>Remo con barra</td><td>10</td><td>4</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
+                        <tr class="section-label"><td colspan="4">EMPUJE — PECHO + HOMBROS</td></tr>
+                        <tr><td>Press banca inclinado c/ mancuernas</td><td>10</td><td>4</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
+                        <tr><td>Press militar con barra</td><td>10</td><td>3</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
+                        <tr class="section-label"><td colspan="4">PIERNAS</td></tr>
+                        <tr><td>Sentadilla con barra</td><td>10</td><td>4</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
+                        <tr><td>Zancada búlgara c/ mancuernas</td><td>12</td><td>3</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
+                        <tr class="section-label"><td colspan="4">CORE — FINISHER</td></tr>
+                        <tr><td>Plancha con peso</td><td>40 seg</td><td>3</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
+                        <tr><td>Rueda abdominal</td><td>12</td><td>3</td><td class="peso-col"><input type="text" class="peso-input" placeholder="—"></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="botones">
+                <button class="btn-guardar" onclick="guardarPesos()">💾 Guardar pesos</button>
+            </div>
+        </div>
+
+        <!-- RUTINA G -->
+        <div class="tab-content" id="tab-g">
+            <div class="rutina-header rutina-g">
+                <div class="rutina-header-left">
+                    <h2>RUTINA G: ABDOMINALES (CON DOMINADAS)</h2>
+                    <div class="badges"><span class="no-cardio-badge">SIN CARDIO</span><span class="calorias-badge" id="cal-g">🔥 — kcal</span></div>
+                </div>
+                <button class="btn-registrar" onclick="registrarEntrada('G')">📅 Registrar</button>
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr><th>Ejercicio</th><th>Reps</th><th>Series</th><th>Peso</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr class="section-label"><td colspan="4">DOMINADAS</td></tr>
+                        <tr><td>Dominadas pronas (agarre ancho)</td><td>8</td><td>4</td><td class="peso-col"><input type="text" class="peso-input" placeholder="—/kg"></td></tr>
+                        <tr><td>Dominadas supinas (agarre cerrado)</td><td>10</td><td>3</td><td class="peso-col"><input type="text" class="peso-input" placeholder="—/kg"></td></tr>
+                        <tr class="section-label"><td colspan="4">ABDOMINALES — COLGADO (barra dominadas)</td></tr>
+                        <tr><td>Elevación de piernas colgado</td><td>12</td><td>4</td><td class="peso-col"><input type="text" class="peso-input" placeholder="—"></td></tr>
+                        <tr><td>Elevación de rodillas c/ giro (oblicuos)</td><td>15/lado</td><td>3</td><td class="peso-col"><input type="text" class="peso-input" placeholder="—"></td></tr>
+                        <tr class="section-label"><td colspan="4">ABDOMINALES — SUELO</td></tr>
+                        <tr><td>Rueda abdominal</td><td>12</td><td>3</td><td class="peso-col"><input type="text" class="peso-input" placeholder="—"></td></tr>
+                        <tr><td>Abdominales bicicleta</td><td>20</td><td>3</td><td class="peso-col"><input type="text" class="peso-input" placeholder="—"></td></tr>
+                        <tr><td>Plancha con toque de hombro</td><td>40 seg</td><td>3</td><td class="peso-col"><input type="text" class="peso-input" placeholder="—"></td></tr>
+                        <tr class="section-label"><td colspan="4">OBLICUOS</td></tr>
+                        <tr><td>Giro ruso con disco</td><td>20</td><td>3</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
+                        <tr><td>Woodchopper en polea</td><td>15/lado</td><td>3</td><td class="peso-col"><input type="text" class="peso-input" placeholder="kg"></td></tr>
                     </tbody>
                 </table>
             </div>
@@ -723,11 +888,14 @@
                 <h3>📝 Notas</h3>
                 <ul>
                     <li><strong>Rutina A:</strong> Core/Espinales en circuito (3 rounds, 50"/10").</li>
-                    <li><strong>Rutina B:</strong> Cardio al inicio — elíptico o cinta con inclinación.</li>
-                    <li><strong>Rutina C:</strong> Cardio al inicio — HIIT en cinta (1'/1').</li>
-                    <li><strong>Rutina D:</strong> Cardio al inicio + Core en circuito + Brazos.</li>
+                    <li><strong>Rutina B:</strong> Cardio al inicio — HIIT en cinta (1'/1').</li>
+                    <li><strong>Rutina C:</strong> Cardio al inicio — elíptico o cinta con inclinación.</li>
+                    <li><strong>Rutina D:</strong> Core en circuito + Brazos (sin cardio).</li>
+                    <li><strong>Rutina E:</strong> HIIT — 3 circuitos de 4 rounds (40″/20″), sin pesos pesados.</li>
+                    <li><strong>Rutina F:</strong> Full body con dominadas — sin cardio.</li>
+                    <li><strong>Rutina G:</strong> Abdominales + dominadas (usa la barra) — sin cardio.</li>
                     <li><strong>Peso muerto:</strong> Excluido.</li>
-                    <li><strong>Duración:</strong> 60-75 min por sesión.</li>
+                    <li><strong>Duración:</strong> ~60-75 min por sesión (A-D), ~60 min (E-G).</li>
                 </ul>
             </div>
 
@@ -760,7 +928,10 @@
             'A': 'Tren inferior + Core',
             'B': 'Pecho + Espalda',
             'C': 'Piernas post. + Hombros',
-            'D': 'Core + Bíceps + Tríceps'
+            'D': 'Core + Bíceps + Tríceps',
+            'E': 'HIIT',
+            'F': 'Full body (dominadas)',
+            'G': 'Abdominales (dominadas)'
         };
 
         const MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
@@ -939,6 +1110,87 @@
             }
         }
 
+        // ===== PESO ACTUAL =====
+        function guardarPesoActual() {
+            const input = document.getElementById('peso-actual');
+            const valor = parseFloat(input.value);
+            if (!isNaN(valor) && valor > 0) {
+                localStorage.setItem('rutina_nico_peso_actual', valor);
+            }
+            calcularCalorias();
+        }
+
+        function cargarPesoActual() {
+            const input = document.getElementById('peso-actual');
+            const guardado = localStorage.getItem('rutina_nico_peso_actual');
+            input.value = guardado ? guardado : 87;
+        }
+
+        // ===== CALORÍAS (estimación, método MET) =====
+        // kcal = MET x peso(kg) x tiempo(horas), sumado por bloques de cada rutina.
+        // Duración total asumida por sesión: ~65 min (A-D, rango real 60-75) / ~62 min (E-G, ~1 hora)
+        // MET fuerza general (pesas/core, esfuerzo moderado-alto con descansos cortos): 5.0
+        // MET fuerza compuesta full body (sentadilla, press, dominadas, remo con barra): 5.5
+        // MET dominadas (tracción vigorosa): 6.0
+        // MET abdominales/core en circuito (esfuerzo moderado): 4.0
+        // MET cardio HIIT en cinta (Rutina B, intervalos 1'/1'): 8.5
+        // MET cardio estable (Rutina C, elíptico/cinta con inclinación): 7.0
+        // MET circuito HIIT tipo calistenia (Rutina E, esfuerzo vigoroso): 8.0
+        // MET calentamiento/enfriamiento/transiciones ligeras: 3.0
+        const DURACION_SESION_MIN = 65;
+        const DURACION_CARDIO_MIN = 15;
+        const MET_FUERZA = 5.0;
+        const MET_FUERZA_COMPUESTA = 5.5;
+        const MET_DOMINADAS = 6.0;
+        const MET_ABS = 4.0;
+        const MET_CARDIO_HIIT = 8.5;
+        const MET_CARDIO_ESTABLE = 7.0;
+        const MET_HIIT_CIRCUITO = 8.0;
+        const MET_LIGERO = 3.0;
+
+        // Suma kcal de una lista de bloques [{minutos, met}] para un peso dado
+        function kcalPorBloques(peso, bloques) {
+            return bloques.reduce((total, b) => total + (b.met * peso * (b.minutos / 60)), 0);
+        }
+
+        function calcularCalorias() {
+            const peso = parseFloat(document.getElementById('peso-actual').value);
+            if (isNaN(peso) || peso <= 0) return;
+
+            const minFuerzaConCardio = DURACION_SESION_MIN - DURACION_CARDIO_MIN;
+
+            const kcalA = kcalPorBloques(peso, [{ minutos: DURACION_SESION_MIN, met: MET_FUERZA }]);
+            const kcalD = kcalPorBloques(peso, [{ minutos: DURACION_SESION_MIN, met: MET_FUERZA }]);
+            const kcalB = kcalPorBloques(peso, [
+                { minutos: DURACION_CARDIO_MIN, met: MET_CARDIO_HIIT },
+                { minutos: minFuerzaConCardio, met: MET_FUERZA }
+            ]);
+            const kcalC = kcalPorBloques(peso, [
+                { minutos: DURACION_CARDIO_MIN, met: MET_CARDIO_ESTABLE },
+                { minutos: minFuerzaConCardio, met: MET_FUERZA }
+            ]);
+            // E: calentamiento (5) + 3 circuitos de 16 min (48) + 2 descansos de 2 min (4) + enfriamiento (5) = 62 min
+            const kcalE = kcalPorBloques(peso, [
+                { minutos: 14, met: MET_LIGERO },
+                { minutos: 48, met: MET_HIIT_CIRCUITO }
+            ]);
+            // F: full body compuesto, ~65 min
+            const kcalF = kcalPorBloques(peso, [{ minutos: DURACION_SESION_MIN, met: MET_FUERZA_COMPUESTA }]);
+            // G: dominadas (~15 min) + abdominales/core (~50 min)
+            const kcalG = kcalPorBloques(peso, [
+                { minutos: 15, met: MET_DOMINADAS },
+                { minutos: 50, met: MET_ABS }
+            ]);
+
+            document.getElementById('cal-a').textContent = `🔥 ~${Math.round(kcalA)} kcal`;
+            document.getElementById('cal-b').textContent = `🔥 ~${Math.round(kcalB)} kcal`;
+            document.getElementById('cal-c').textContent = `🔥 ~${Math.round(kcalC)} kcal`;
+            document.getElementById('cal-d').textContent = `🔥 ~${Math.round(kcalD)} kcal`;
+            document.getElementById('cal-e').textContent = `🔥 ~${Math.round(kcalE)} kcal`;
+            document.getElementById('cal-f').textContent = `🔥 ~${Math.round(kcalF)} kcal`;
+            document.getElementById('cal-g').textContent = `🔥 ~${Math.round(kcalG)} kcal`;
+        }
+
         // ===== TOAST =====
         function showToast(msg) {
             const toast = document.getElementById('toast');
@@ -957,8 +1209,12 @@
         // ===== INIT =====
         window.onload = function() {
             cargarPesos();
+            cargarPesoActual();
+            calcularCalorias();
             actualizarResumen();
             populateMesSelector();
+            document.getElementById('peso-actual').addEventListener('change', guardarPesoActual);
+            document.getElementById('peso-actual').addEventListener('input', calcularCalorias);
         };
     </script>
 </body>
